@@ -1,4 +1,5 @@
 import { Main } from '../../pages/main';
+import { Header } from '../header';
 
 
 type AppOfferProps = {
@@ -7,8 +8,11 @@ type AppOfferProps = {
 
 export function App ({offersCount}: AppOfferProps): JSX.Element {
   return (
-    <Main
-      offersCount={offersCount}
-    />
+    <>
+      <Header />
+      <Main
+        offersCount={offersCount}
+      />
+    </>
   );
 }

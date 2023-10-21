@@ -1,5 +1,4 @@
 import { Card } from '../../components/card';
-import { Header } from '../../components/header';
 
 export function Favorites (): JSX.Element {
   const CARD_CLASSNAME = 'favorites';
@@ -8,7 +7,6 @@ export function Favorites (): JSX.Element {
 
   return (
     <div className="page">
-      <Header />
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
           <section className="favorites">

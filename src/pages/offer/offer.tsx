@@ -1,5 +1,4 @@
 import { Card } from '../../components/card';
-import { Header } from '../../components/header';
 
 export function Offer (): JSX.Element {
   const NEAR_PLACES_COUNT = 3;
@@ -20,7 +19,6 @@ export function Offer (): JSX.Element {
 
   return (
     <div className="page">
-      <Header />
       <main className="page__main page__main--offer">
         <section className="offer">
           <div className="offer__gallery-container container">
