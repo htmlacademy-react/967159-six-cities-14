@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async';
 import { Card } from '../../components/card';
 
 export function Offer (): JSX.Element {
@@ -19,13 +20,16 @@ export function Offer (): JSX.Element {
 
   return (
     <div className="page">
+      <Helmet>
+        <title>{'6 cities: offer'}</title>
+      </Helmet>
       <main className="page__main page__main--offer">
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
               {
-                images.map((item) => (
-                  <div className="offer__image-wrapper" key={item}>
+                images.map((item, i) => (
+                  <div className="offer__image-wrapper" key={i.toString() + item}>
                     <img
                       className="offer__image"
                       src={item}
