@@ -1,0 +1,32 @@
+.notFound {
+  min-height: 100vh;
+}
+
+.linkContainer {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: #f2f2f2;
+}
+
+.contentContainer {
+  min-height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+}
+
+.text {
+  font-size: 32px;
+  font-weight: 700;
+  font-style: oblique;
+}
+
+.link {
+  color: #4481c3;
+}
+
+.link:hover {
+  opacity: 0.5;
+}

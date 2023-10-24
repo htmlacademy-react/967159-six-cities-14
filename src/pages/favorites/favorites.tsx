@@ -1,4 +1,6 @@
+import { Helmet } from 'react-helmet-async';
 import { Card } from '../../components/card';
+import { Footer } from '../../components/footer/';
 
 export function Favorites (): JSX.Element {
   const CARD_CLASSNAME = 'favorites';
@@ -7,6 +9,9 @@ export function Favorites (): JSX.Element {
 
   return (
     <div className="page">
+      <Helmet>
+        <title>{'6 cities: favorites'}</title>
+      </Helmet>
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
           <section className="favorites">
@@ -34,11 +39,7 @@ export function Favorites (): JSX.Element {
           </section>
         </div>
       </main>
-      <footer className="footer container">
-        <a className="footer__logo-link" href="main.html">
-          <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33"/>
-        </a>
-      </footer>
+      <Footer />
     </div>
   );
 }

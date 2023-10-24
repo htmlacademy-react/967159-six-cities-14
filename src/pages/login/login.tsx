@@ -1,6 +1,11 @@
+import { Helmet } from 'react-helmet-async';
+
 export function Login (): JSX.Element {
   return (
     <div className="page page--gray page--login">
+      <Helmet>
+        <title>{'6 cities: authorization'}</title>
+      </Helmet>
       <main className="page__main page__main--login">
         <div className="page__login-container container">
           <section className="login">
