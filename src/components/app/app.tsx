@@ -2,17 +2,17 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 
 import { Main, Favorites, Login, Offer, NotFound } from '../../pages/';
-// import { Header } from '../header';
 import { Layout } from '../layout';
 import { ProtectedRoute } from '../protected-route';
 
 import { AppRoute, AuthorizationStatus } from '../../const';
+import { TOffer } from '../../types/offer';
 
-type AppOfferProps = {
-  offersCount: number;
+type TAppProps = {
+  offers: TOffer[];
 }
 
-export function App ({offersCount}: AppOfferProps): JSX.Element {
+export function App ({ offers }: TAppProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -23,7 +23,7 @@ export function App ({offersCount}: AppOfferProps): JSX.Element {
           >
             <Route
               index
-              element={<Main offersCount={offersCount} />}
+              element={<Main offers={offers} />}
             />
             <Route
               path={AppRoute.Favorites}
@@ -32,7 +32,7 @@ export function App ({offersCount}: AppOfferProps): JSX.Element {
                   restrictedFor={AuthorizationStatus.NoAuth}
                   redirectTo={AppRoute.Login}
                 >
-                  <Favorites />
+                  <Favorites offers={offers}/>
                 </ProtectedRoute>
               }
             />
@@ -49,7 +49,7 @@ export function App ({offersCount}: AppOfferProps): JSX.Element {
             />
             <Route
               path={`${AppRoute.Offer}/:offerId`}
-              element={<Offer />}
+              element={<Offer offers={offers} />}
             />
           </Route>
           <Route

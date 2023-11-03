@@ -1,11 +1,31 @@
 import { Helmet } from 'react-helmet-async';
+
 import { Card } from '../../components/card';
 import { Footer } from '../../components/footer/';
 
-export function Favorites (): JSX.Element {
+import { TOfferPreview } from '../../types/offer-preview';
+
+type TFavoritesProps = {
+  offers: TOfferPreview[];
+}
+
+function getFavoritesByCity (favorites: TOfferPreview[]) {
+  return favorites.reduce<{ [key: string]: TOfferPreview[] }>((acc, curr) => {
+    const city = curr.city.name;
+
+    if (!(city in acc)) {
+      acc[city] = [];
+    }
+    acc[city].push(curr);
+
+    return acc;
+  }, {});
+}
+
+export function Favorites ({ offers }: TFavoritesProps): JSX.Element {
   const CARD_CLASSNAME = 'favorites';
 
-  const cities = [{name: 'Amsterdam', count: 2}, {name: 'Cologne', count: 1}];
+  const favoritesByCity = getFavoritesByCity(offers);
 
   return (
     <div className="page">
@@ -18,22 +38,26 @@ export function Favorites (): JSX.Element {
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
               {
-                cities.map((city) => (
-                  <li className="favorites__locations-items" key={city?.name}>
-                    <div className="favorites__locations locations locations--current">
-                      <div className="locations__item">
-                        <a className="locations__item-link" href="#">
-                          <span>{city?.name}</span>
-                        </a>
+                Object.entries(favoritesByCity).map(
+                  ([city, groupedFavorites]) => (
+                    <li className="favorites__locations-items" key={city}>
+                      <div className="favorites__locations locations locations--current">
+                        <div className="locations__item">
+                          <a className="locations__item-link" href="#">
+                            <span>{city}</span>
+                          </a>
+                        </div>
                       </div>
-                    </div>
-                    <div className="favorites__places">
-                      {
-                        Array.from({length: city.count}, () => <Card key={Date.now() + Math.random()} className={CARD_CLASSNAME}/>)
-                      }
-                    </div>
-                  </li>
-                ))
+                      <div className="favorites__places">
+                        {
+                          groupedFavorites.map((offer) => (
+                            <Card key={offer.id} className={CARD_CLASSNAME} offer={offer} size='small'/>
+                          ))
+                        }
+                      </div>
+                    </li>
+                  )
+                )
               }
             </ul>
           </section>
