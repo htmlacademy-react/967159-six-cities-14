@@ -1,16 +1,9 @@
-import { CityName } from '../const';
+import { CityMap } from '../const';
 import { TOffer } from '../types/offer';
 
 export const offers: TOffer[] = [
   {
-    city: {
-      name: CityName.Cologne,
-      location: {
-        latitude: 50.938361,
-        longitude: 6.959974,
-        zoom: 13
-      }
-    },
+    city: CityMap.Amsterdam,
     previewImage: 'https://14.react.pages.academy/static/offer/10.jpg',
     images: [
       'https://14.react.pages.academy/static/offer/3.jpg',
@@ -48,21 +41,14 @@ export const offers: TOffer[] = [
     },
     description: 'Relax, rejuvenate and unplug in this ultimate rustic getaway experience in the country. In our beautiful screened Pondhouse, you can gaze at the stars and listen to the sounds of nature from your cozy warm bed.',
     location: {
-      latitude: 50.960361,
-      longitude: 6.967974,
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
       zoom: 16
     },
     id: '87'
   },
   {
-    city: {
-      name: CityName.Amsterdam,
-      location: {
-        'latitude': 52.37454,
-        'longitude': 4.897976,
-        'zoom': 13
-      }
-    },
+    city: CityMap.Amsterdam,
     previewImage: 'https://14.react.pages.academy/static/offer/11.jpg',
     images: [
       'https://14.react.pages.academy/static/offer/11.jpg',
@@ -108,21 +94,14 @@ export const offers: TOffer[] = [
     },
     description: 'Relax, rejuvenate and unplug in this ultimate rustic getaway experience in the country. In our beautiful screened Pondhouse, you can gaze at the stars and listen to the sounds of nature from your cozy warm bed.',
     location: {
-      latitude: 52.388540000000006,
-      longitude: 4.899976,
+      latitude: 52.3609553943508,
+      longitude: 4.85309666406198,
       zoom: 16
     },
     id: '88'
   },
   {
-    city: {
-      name: CityName.Brussels,
-      location: {
-        latitude: 50.846557,
-        longitude: 4.351697,
-        zoom: 13
-      }
-    },
+    city: CityMap.Amsterdam,
     previewImage: 'https://14.react.pages.academy/static/offer/15.jpg',
     images: [
       'https://14.react.pages.academy/static/offer/4.jpg',
@@ -165,21 +144,14 @@ export const offers: TOffer[] = [
     },
     description: 'I am happy to welcome you to my apartment in the city center! Three words: location, cosy and chic!',
     'location': {
-      latitude: 50.827557,
-      longitude: 4.336697,
+      latitude: 52.3909553943508,
+      longitude: 4.929309666406198,
       zoom: 16
     },
     id: '89'
   },
   {
-    city: {
-      name: CityName.Brussels,
-      location: {
-        latitude: 50.846557,
-        longitude: 4.351697,
-        zoom: 13
-      }
-    },
+    city: CityMap.Amsterdam,
     previewImage: 'https://14.react.pages.academy/static/offer/17.jpg',
     images: [
       'https://14.react.pages.academy/static/offer/17.jpg',
@@ -219,8 +191,8 @@ export const offers: TOffer[] = [
     },
     description: 'Relax, rejuvenate and unplug in this ultimate rustic getaway experience in the country. In our beautiful screened Pondhouse, you can gaze at the stars and listen to the sounds of nature from your cozy warm bed.',
     location: {
-      latitude: 50.828556999999996,
-      longitude: 4.362697,
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198,
       zoom: 16
     },
     id: '90'
