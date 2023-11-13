@@ -3,12 +3,13 @@ import { useState } from 'react';
 import classNames from 'classnames';
 
 import { Card } from '../card';
+import { Map } from '../map';
 
 import { TOfferPreview } from '../../types/offer-preview';
 
 import { addPluralEnding } from '../../utils/common';
-import { CityName } from '../../const';
-import { Map } from '../map';
+import { CityMap, OFFERS_COUNT } from '../../const';
+
 
 type TCitiesProps = {
   offers: TOfferPreview[];
@@ -21,7 +22,7 @@ export function Cities ({ offers }: TCitiesProps): JSX.Element {
 
   const [hoveredOfferId, setHoveredOfferId] = useState<TOfferPreview['id'] | null>(null);
 
-  const activeCity = CityName.Amsterdam;
+  const activeCity = CityMap.Amsterdam;
 
   function handleCardHover (offerId: TOfferPreview['id'] | null) {
     setHoveredOfferId(offerId);
@@ -33,7 +34,7 @@ export function Cities ({ offers }: TCitiesProps): JSX.Element {
         <section className="cities__places places">
           <h2 className="visually-hidden">Places</h2>
           <b className="places__found">
-            {offers.length} place{addPluralEnding(offers.length)} to stay in  {activeCity}
+            {offers.length} place{addPluralEnding(offers.length)} to stay in {activeCity.name}
           </b>
           <form className="places__sorting" action="#" method="get">
             <span className="places__sorting-caption">Sort by </span>
@@ -59,11 +60,11 @@ export function Cities ({ offers }: TCitiesProps): JSX.Element {
           </form>
           <div className="cities__places-list places__list tabs__content">
             {
-              offers.map((offer) => (
+              offers.slice(0, OFFERS_COUNT).map((offer) => (
                 <Card
                   key={offer.id}
                   offer={offer}
-                  className="cities"
+                  block="cities"
                   onCardHover={handleCardHover}
                 />
               ))
@@ -71,7 +72,12 @@ export function Cities ({ offers }: TCitiesProps): JSX.Element {
           </div>
         </section>
         <div className="cities__right-section">
-          <Map activePin={hoveredOfferId}/>
+          <Map
+            block="cities"
+            location={activeCity.location}
+            offers={offers}
+            specialOfferId={hoveredOfferId}
+          />
         </div>
       </div>
     </div>

@@ -10,21 +10,20 @@ type TFavoritesProps = {
 }
 
 function getFavoritesByCity (favorites: TOfferPreview[]) {
-  return favorites.reduce<{ [key: string]: TOfferPreview[] }>((acc, curr) => {
-    const city = curr.city.name;
+  return favorites.reduce<{ [key: string]: TOfferPreview[] }>((acc, offer: TOfferPreview) => {
+    const city = offer.city.name;
 
     if (!(city in acc)) {
       acc[city] = [];
     }
-    acc[city].push(curr);
+    acc[city].push(offer);
 
     return acc;
   }, {});
 }
 
-export function Favorites ({ offers }: TFavoritesProps): JSX.Element {
-  const CARD_CLASSNAME = 'favorites';
 
+export function Favorites ({ offers }: TFavoritesProps): JSX.Element {
   const favoritesByCity = getFavoritesByCity(offers);
 
   return (
@@ -51,7 +50,7 @@ export function Favorites ({ offers }: TFavoritesProps): JSX.Element {
                       <div className="favorites__places">
                         {
                           groupedFavorites.map((offer) => (
-                            <Card key={offer.id} className={CARD_CLASSNAME} offer={offer} size='small'/>
+                            <Card key={offer.id} block='favorites' offer={offer} size='small'/>
                           ))
                         }
                       </div>
@@ -67,3 +66,4 @@ export function Favorites ({ offers }: TFavoritesProps): JSX.Element {
     </div>
   );
 }
+// TODO: сделать страницу для пустого списка
