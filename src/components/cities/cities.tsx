@@ -1,31 +1,41 @@
-import { useState } from 'react';
-
-import classNames from 'classnames';
+import { useState, useEffect } from 'react';
 
 import { Card } from '../card';
 import { Map } from '../map';
+import { Sorting } from '../sorting';
 
 import { TOfferPreview } from '../../types/offer-preview';
+import { TCity } from '../../types/city';
+import { TSorting } from '../../types/sorting';
+
+import { OFFERS_COUNT, SortingMap } from '../../const';
 
 import { addPluralEnding } from '../../utils/common';
-import { CityMap, OFFERS_COUNT } from '../../const';
+import { sorting } from '../../utils/offer';
 
 
 type TCitiesProps = {
   offers: TOfferPreview[];
+  activeCity: TCity;
 }
 
-export function Cities ({ offers }: TCitiesProps): JSX.Element {
-  const filters = ['Popular', 'Price: low to high', 'Price: high to low', 'Top rated first'];
-
-  const activeFilter = 'Popular';
+export function Cities ({ offers, activeCity }: TCitiesProps): JSX.Element {
+  const [activeSorting, setActiveSorting] = useState<TSorting>(SortingMap.Popular);
 
   const [hoveredOfferId, setHoveredOfferId] = useState<TOfferPreview['id'] | null>(null);
 
-  const activeCity = CityMap.Amsterdam;
+  useEffect(() => {
+    setActiveSorting(SortingMap.Popular);
+  }, [activeCity]);
 
   function handleCardHover (offerId: TOfferPreview['id'] | null) {
     setHoveredOfferId(offerId);
+  }
+
+  function handleSortingClick (type: TSorting) {
+    if (activeSorting !== type) {
+      setActiveSorting(type);
+    }
   }
 
   return (
@@ -36,31 +46,13 @@ export function Cities ({ offers }: TCitiesProps): JSX.Element {
           <b className="places__found">
             {offers.length} place{addPluralEnding(offers.length)} to stay in {activeCity.name}
           </b>
-          <form className="places__sorting" action="#" method="get">
-            <span className="places__sorting-caption">Sort by </span>
-            <span className="places__sorting-type" tabIndex={0}>
-              Popular
-              <svg className="places__sorting-arrow" width={7} height={4}>
-                <use xlinkHref="#icon-arrow-select" />
-              </svg>
-            </span>
-            <ul className="places__options places__options--custom places__options--opened">
-              {
-                filters.map((item) => (
-                  <li
-                    className={classNames('places__option', {'places__option--active': item === activeFilter})}
-                    tabIndex={0}
-                    key={item}
-                  >
-                    {item}
-                  </li>
-                ))
-              }
-            </ul>
-          </form>
+          <Sorting
+            activeSorting={activeSorting}
+            onChange={handleSortingClick}
+          />
           <div className="cities__places-list places__list tabs__content">
             {
-              offers.slice(0, OFFERS_COUNT).map((offer) => (
+              sorting[activeSorting](offers).slice(0, OFFERS_COUNT).map((offer) => (
                 <Card
                   key={offer.id}
                   offer={offer}
@@ -83,3 +75,4 @@ export function Cities ({ offers }: TCitiesProps): JSX.Element {
     </div>
   );
 }
+// TODO: Сделать страницу для 0 предложений

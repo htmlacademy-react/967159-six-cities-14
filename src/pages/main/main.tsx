@@ -1,18 +1,15 @@
 import { Helmet } from 'react-helmet-async';
-import classNames from 'classnames';
-
-import { TOfferPreview } from '../../types/offer-preview';
 
 import { Cities } from '../../components/cities';
+import { CitiesList } from '../../components/cities-list';
 
-type TMainProps = {
-  offers: TOfferPreview[];
-}
+import { useAppSelector } from '../../hooks';
 
-export function Main ({ offers }: TMainProps): JSX.Element {
-  const cities = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+export function Main (): JSX.Element {
+  const offers = useAppSelector((state) => state.offers);
+  const activeCity = useAppSelector((state) => state.activeCity);
 
-  const activeTown = 'Amsterdam';
+  const offersByActiveCity = offers.filter((offer) => offer.city.name === activeCity.name);
 
   return (
     <div className="page page--gray page--main">
@@ -22,24 +19,14 @@ export function Main ({ offers }: TMainProps): JSX.Element {
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
-          <section className="locations container">
-            <ul className="locations__list tabs__list">
-              {
-                cities.map((item) => (
-                  <li className="locations__item" key={item}>
-                    <a
-                      className={classNames('locations__item-link tabs__item', {'tabs__item--active': item === activeTown})}
-                      href="#"
-                    >
-                      <span>{item}</span>
-                    </a>
-                  </li>
-                ))
-              }
-            </ul>
-          </section>
+          <CitiesList
+            activeCity={activeCity.name}
+          />
         </div>
-        <Cities offers={offers}/>
+        <Cities
+          offers={offersByActiveCity}
+          activeCity={activeCity}
+        />
       </main>
     </div>
   );

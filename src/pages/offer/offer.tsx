@@ -1,34 +1,43 @@
 import { useParams, Navigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
+
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { dropOffer, fetchNearPlaces, fetchOffer } from '../../store/actions';
 
 import { OfferDetails } from '../../components/offer-details';
 import { Map } from '../../components/map';
+import { NearPlaces } from '../../components/near-places';
 
 import { AppRoute, NEAR_PLACES_COUNT } from '../../const';
 
-import { TOffer } from '../../types/offer';
-import { NearPlaces } from '../../components/near-places';
 
-
-type TOfferProps = {
-  offers: TOffer[];
-}
-
-export function Offer ({ offers }: TOfferProps): JSX.Element {
+export function Offer (): JSX.Element {
   const { offerId } = useParams();
-  const offer = offers.find((item) => item.id === offerId);
+  const dispatch = useAppDispatch();
+  const offer = useAppSelector((state) => state.offer);
+  const nearPlaces = useAppSelector((state) => state.nearPlaces);
+  const nearPlacesToRender = nearPlaces.slice(0, NEAR_PLACES_COUNT);
+
+  useEffect(() => {
+    if (offerId) {
+      dispatch(fetchOffer(offerId));
+      dispatch(fetchNearPlaces(offerId));
+    }
+
+    return () => {
+      dispatch(dropOffer());
+    };
+  }, [offerId, dispatch]);
 
   if (!offer) {
     return <Navigate to={AppRoute.NotFound} />;
   }
 
-  // TODO: Временная переменная, потом в Map offersForMap заменить на [...offers.slice..., offer]
-  const offersForMap = offers.filter((item) => item.id !== offer.id);
-
   return (
     <div className="page">
       <Helmet>
-        <title>{`6 cities: ${offer.title}`}</title>
+        <title>{`6 cities: ${offer?.title ?? ''}`}</title>
       </Helmet>
       <main className="page__main page__main--offer">
         <section className="offer">
@@ -36,15 +45,14 @@ export function Offer ({ offers }: TOfferProps): JSX.Element {
           <Map
             block="offer"
             location={offer.city.location}
-            offers={[...offersForMap.slice(0, NEAR_PLACES_COUNT), offer]}
+            offers={[...nearPlacesToRender, offer]}
             specialOfferId={offer.id}
           />
         </section>
         <div className="container">
-          <NearPlaces offers={offers.slice(0, NEAR_PLACES_COUNT)} />
+          <NearPlaces offers={nearPlacesToRender} />
         </div>
       </main>
     </div>
   );
 }
-

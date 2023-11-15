@@ -20,6 +20,15 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
+export enum NameSpace {
+  Offers = 'OFFERS',
+  Offer = 'OFFER',
+  NearPlaces = 'NEAR_PLACES',
+  Favorites = 'FAVORITES',
+  Reviews = 'REVIEWS',
+  User = 'USER',
+}
+
 export enum CityName {
   Paris = 'Paris',
   Cologne = 'Cologne',
@@ -30,7 +39,7 @@ export enum CityName {
 }
 
 export const CityMap = {
-  Paris: {
+  [CityName.Paris]: {
     name: CityName.Paris,
     location: {
       latitude: 48.85661,
@@ -38,7 +47,7 @@ export const CityMap = {
       zoom: 13
     }
   },
-  Cologne: {
+  [CityName.Cologne]: {
     name: CityName.Cologne,
     location: {
       latitude: 50.938361,
@@ -46,7 +55,7 @@ export const CityMap = {
       zoom: 13
     }
   },
-  Brussels: {
+  [CityName.Brussels]: {
     name: CityName.Brussels,
     location: {
       latitude: 50.846557,
@@ -54,7 +63,7 @@ export const CityMap = {
       zoom: 13
     }
   },
-  Amsterdam: {
+  [CityName.Amsterdam]: {
     name: CityName.Amsterdam,
     location: {
       latitude: 52.37454,
@@ -62,7 +71,7 @@ export const CityMap = {
       zoom: 13
     }
   },
-  Hamburg: {
+  [CityName.Hamburg]: {
     name: CityName.Hamburg,
     location: {
       latitude: 53.550341,
@@ -70,7 +79,7 @@ export const CityMap = {
       zoom: 13
     }
   },
-  Dusseldorf: {
+  [CityName.Dusseldorf]: {
     name: CityName.Dusseldorf,
     location: {
       latitude: 51.225402,
@@ -78,4 +87,11 @@ export const CityMap = {
       zoom: 13
     }
   },
-};
+} as const;
+
+export const SortingMap = {
+  Popular: 'Popular',
+  LowToHigh: 'Price: low to high',
+  HighToLow: 'Price: high to low',
+  TopRated: 'Top rated first',
+} as const;
