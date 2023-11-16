@@ -5,9 +5,8 @@ import { Footer } from '../../components/footer/';
 
 import { TOfferPreview } from '../../types/offer-preview';
 
-type TFavoritesProps = {
-  offers: TOfferPreview[];
-}
+import { useAppSelector } from '../../hooks';
+
 
 function getFavoritesByCity (favorites: TOfferPreview[]) {
   return favorites.reduce<{ [key: string]: TOfferPreview[] }>((acc, offer: TOfferPreview) => {
@@ -23,8 +22,9 @@ function getFavoritesByCity (favorites: TOfferPreview[]) {
 }
 
 
-export function Favorites ({ offers }: TFavoritesProps): JSX.Element {
-  const favoritesByCity = getFavoritesByCity(offers);
+export function Favorites (): JSX.Element {
+  const favorites = useAppSelector((state) => state.favorites);
+  const favoritesByCity = getFavoritesByCity(favorites);
 
   return (
     <div className="page">

@@ -6,13 +6,9 @@ import { Layout } from '../layout';
 import { ProtectedRoute } from '../protected-route';
 
 import { AppRoute, AuthorizationStatus } from '../../const';
-import { TOffer } from '../../types/offer';
 
-type TAppProps = {
-  offers: TOffer[];
-}
 
-export function App ({ offers }: TAppProps): JSX.Element {
+export function App (): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -23,7 +19,7 @@ export function App ({ offers }: TAppProps): JSX.Element {
           >
             <Route
               index
-              element={<Main offers={offers} />}
+              element={<Main />}
             />
             <Route
               path={AppRoute.Favorites}
@@ -32,7 +28,7 @@ export function App ({ offers }: TAppProps): JSX.Element {
                   restrictedFor={AuthorizationStatus.NoAuth}
                   redirectTo={AppRoute.Login}
                 >
-                  <Favorites offers={offers}/>
+                  <Favorites />
                 </ProtectedRoute>
               }
             />
@@ -49,7 +45,7 @@ export function App ({ offers }: TAppProps): JSX.Element {
             />
             <Route
               path={`${AppRoute.Offer}/:offerId`}
-              element={<Offer offers={offers} />}
+              element={<Offer />}
             />
           </Route>
           <Route
